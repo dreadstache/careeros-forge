@@ -1,0 +1,17 @@
+{
+  "project_name": "CareerOS",
+  "output_directory": "../generated",
+  "modules": [
+    "base",
+    "github",
+    "backend",
+    "frontend",
+    "database",
+    "portfolio",
+    "resume",
+    "analytics",
+    "gis",
+    "games",
+    "music"
+  ]
+}
