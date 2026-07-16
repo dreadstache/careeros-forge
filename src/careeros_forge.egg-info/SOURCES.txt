@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+src/careeros_forge/__init__.py
+src/careeros_forge/__main__.py
+src/careeros_forge/cli.py
+src/careeros_forge/config.py
+src/careeros_forge/filesystem.py
+src/careeros_forge/generator.py
+src/careeros_forge.egg-info/PKG-INFO
+src/careeros_forge.egg-info/SOURCES.txt
+src/careeros_forge.egg-info/dependency_links.txt
+src/careeros_forge.egg-info/entry_points.txt
+src/careeros_forge.egg-info/top_level.txt
+tests/test_generator.py
