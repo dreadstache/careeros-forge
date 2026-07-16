@@ -1,0 +1,2 @@
+[console_scripts]
+careeros-forge = careeros_forge.cli:main

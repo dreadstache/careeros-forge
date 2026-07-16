@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: careeros-forge
+Version: 0.1.0
+Summary: A modular project scaffolding tool for the CareerOS ecosystem.
+Author: Lucien Marcel Coté
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# CareerOS Forge
+
+> Forge projects. Build careers.
+
+CareerOS Forge is a Python project scaffolding tool for generating
+professional repository structures from configuration files.
+
+## v0.1 Goal
+
+- Read `forge.json`
+- Create folders
+- Generate README and `.gitignore`
+- Leave a project ready for VS Code
+
+## Run
+
+```bash
+python -m careeros_forge
+```
