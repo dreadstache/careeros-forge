@@ -5,6 +5,10 @@
   "type": "object",
   "required": ["basics", "experience", "education", "skills", "projects"],
   "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
     "basics": {
       "type": "object",
       "required": ["name", "headline", "summary"],
@@ -42,6 +46,9 @@
       "type": "object",
       "required": ["organization", "position", "start_date", "highlights"],
       "properties": {
+        "id": {"$ref": "#/$defs/recordId"},
+        "status": {"$ref": "#/$defs/status"},
+        "provenance": {"$ref": "#/$defs/provenance"},
         "organization": {"type": "string", "minLength": 1},
         "position": {"type": "string", "minLength": 1},
         "start_date": {"$ref": "#/$defs/date"},
@@ -59,6 +66,9 @@
       "type": "object",
       "required": ["institution", "credential", "start_date"],
       "properties": {
+        "id": {"$ref": "#/$defs/recordId"},
+        "status": {"$ref": "#/$defs/status"},
+        "provenance": {"$ref": "#/$defs/provenance"},
         "institution": {"type": "string", "minLength": 1},
         "credential": {"type": "string", "minLength": 1},
         "field": {"type": "string"},
@@ -77,6 +87,9 @@
       "type": "object",
       "required": ["name", "keywords"],
       "properties": {
+        "id": {"$ref": "#/$defs/recordId"},
+        "status": {"$ref": "#/$defs/status"},
+        "provenance": {"$ref": "#/$defs/provenance"},
         "name": {"type": "string", "minLength": 1},
         "keywords": {
           "type": "array",
@@ -90,6 +103,9 @@
       "type": "object",
       "required": ["name", "summary", "highlights"],
       "properties": {
+        "id": {"$ref": "#/$defs/recordId"},
+        "status": {"$ref": "#/$defs/status"},
+        "provenance": {"$ref": "#/$defs/provenance"},
         "name": {"type": "string", "minLength": 1},
         "summary": {"type": "string"},
         "url": {
@@ -109,6 +125,29 @@
           "uniqueItems": true,
           "default": []
         }
+      },
+      "additionalProperties": false
+    },
+    "recordId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "archived"],
+      "default": "active"
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source"],
+      "properties": {
+        "source": {"type": "string", "minLength": 1},
+        "source_type": {
+          "type": "string",
+          "enum": ["verified_cv", "spreadsheet", "manual", "import"]
+        },
+        "imported_at": {"type": "string", "format": "date-time"},
+        "note": {"type": "string"}
       },
       "additionalProperties": false
     }
