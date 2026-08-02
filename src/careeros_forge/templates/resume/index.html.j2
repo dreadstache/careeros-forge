@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ resume.basics.name or "Resume" }}</title>
+  <title>{{ resume.basics.name or "Resume" }}{% if profile_title is defined and profile_title %} · {{ profile_title }}{% endif %}</title>
   <style>
     :root { --ink:#18202d; --muted:#5f6b7a; --line:#dce2e9; --accent:#176b87; }
     * { box-sizing:border-box; }
@@ -28,6 +28,7 @@
 <main>
   <header>
     <h1>{{ resume.basics.name or "Your Name" }}</h1>
+    {% if profile_title is defined and profile_title %}<p class="meta">{{ profile_title }}</p>{% endif %}
     <p class="headline">{{ resume.basics.headline or "Professional Headline" }}</p>
     {% if resume.basics.summary %}<p>{{ resume.basics.summary }}</p>{% endif %}
   </header>
