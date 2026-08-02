@@ -71,3 +71,34 @@ def test_resume_module_rejects_invalid_input_before_resume_output(
         generate_project(configured_project(tmp_path, "career.json"))
 
     assert not (tmp_path / "output" / "Demo" / "resume").exists()
+
+
+def test_resume_module_generates_filtered_profiles(tmp_path: Path) -> None:
+    data = resume_data()
+    data["experience"][0]["id"] = "experience-engine"
+    data["skills"][0]["id"] = "skills-math"
+    source = tmp_path / "career.json"
+    source.write_text(json.dumps(data), encoding="utf-8")
+    config = ForgeConfig(
+        "Demo",
+        tmp_path / "output",
+        ("resume",),
+        {"resume": {"data_file": "career.json", "profiles": [{
+            "slug": "computing",
+            "title": "Computing Resume",
+            "headline": "Algorithm Designer",
+            "experience_ids": ["experience-engine"],
+            "skill_ids": ["skills-math"],
+            "project_ids": [],
+        }]}},
+        tmp_path,
+    )
+
+    root = generate_project(config)
+
+    profile = json.loads((root / "resume" / "computing" / "resume.json").read_text(encoding="utf-8"))
+    html = (root / "resume" / "computing" / "index.html").read_text(encoding="utf-8")
+    assert profile["basics"]["headline"] == "Algorithm Designer"
+    assert [item["id"] for item in profile["experience"]] == ["experience-engine"]
+    assert profile["projects"] == []
+    assert "Computing Resume" in html
