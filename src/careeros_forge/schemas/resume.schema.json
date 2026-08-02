@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://careeros.dev/schemas/resume.schema.json",
+  "title": "CareerOS Resume Data",
+  "type": "object",
+  "required": ["basics", "experience", "education", "skills", "projects"],
+  "properties": {
+    "basics": {
+      "type": "object",
+      "required": ["name", "headline", "summary"],
+      "properties": {
+        "name": {"type": "string"},
+        "headline": {"type": "string"},
+        "summary": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "experience": {"type": "array", "items": {"type": "object"}},
+    "education": {"type": "array", "items": {"type": "object"}},
+    "skills": {"type": "array", "items": {"type": "object"}},
+    "projects": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": false
+}

@@ -12,6 +12,10 @@ authors = [
     { name = "Lucien Marcel Coté" }
 ]
 license = { text = "MIT" }
+dependencies = [
+    "Jinja2>=3.1,<4",
+    "jsonschema>=4.23,<5",
+]
 
 [project.scripts]
 careeros-forge = "careeros_forge.cli:main"
@@ -21,6 +25,13 @@ package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+careeros_forge = [
+    "templates/**/*.j2",
+    "templates/**/*.template",
+    "schemas/*.json",
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

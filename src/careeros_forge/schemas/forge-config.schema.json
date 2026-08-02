@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://careeros.dev/schemas/forge-config.schema.json",
+  "title": "CareerOS Forge Configuration",
+  "type": "object",
+  "required": ["project_name"],
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_directory": {
+      "type": "string",
+      "minLength": 1,
+      "default": "./generated"
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "default": ["base"]
+    }
+  },
+  "additionalProperties": false
+}

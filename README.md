@@ -9,9 +9,9 @@ folders, starter documentation, and project hygiene files.
 
 ## Current Status
 
-CareerOS Forge is in the `0.1.0` foundation phase. The current implementation
-focuses on a reliable base generator that can be expanded with modular templates
-for the wider CareerOS ecosystem.
+CareerOS Forge is in the `0.1.0` foundation phase. It includes a reliable base
+generator plus automatic discovery of optional modules. The first working
+module, `resume`, creates a truthful-data-first resume workspace.
 
 ## Intended Functions
 
@@ -32,10 +32,10 @@ CareerOS Forge is intended to provide the following functions as it grows:
   empty directories can be tracked by Git.
 - **Command-line execution**: Run from the command line with `python -m
   careeros_forge` or the installed `careeros-forge` script.
-- **Module expansion**: Use the `modules` list in `forge.json` as the future
-  extension point for optional scaffolds such as GitHub workflows, backend,
-  frontend, database, portfolio, resume, analytics, GIS, games, and music
-  project assets.
+- **Module expansion**: Use the `modules` list in `forge.json` to select
+  automatically discovered scaffolds. The `resume` module is available now;
+  GitHub workflows, backend, frontend, database, portfolio, analytics, GIS,
+  games, and music remain planned.
 - **Template-driven generation**: Move starter files toward reusable templates so
   generated output can be customized without changing generator logic.
 - **CareerOS ecosystem readiness**: Produce repositories that are ready for VS
@@ -54,6 +54,19 @@ it.
 - Confirmed that v0.1 currently creates the configured project root, standard
   base directories, `.gitkeep` files, a generated README, and a generated
   `.gitignore`.
+
+### 2026-08-01
+
+- Added a module registry that automatically discovers bundled Forge modules.
+- Added a shared generation context and module interface.
+- Added the always-on `base` module and the optional `resume` module, which
+  generates a starter resume README and structured JSON data file when selected.
+- Added CLI reporting for generated, skipped, and unknown module names.
+- Added a packaged Jinja template layer and migrated the base and resume modules
+  away from hard-coded generated content.
+- Added packaged JSON Schemas for `forge.json` and resume data. Configuration is
+  validated before generation, and rendered resume JSON is validated before it
+  is written.
 
 ## Configuration
 
@@ -86,7 +99,7 @@ run. A typical configuration looks like this:
 | --- | --- | --- | --- |
 | `project_name` | Yes | Names the generated project folder and starter README heading. | Continue serving as the canonical generated project name. |
 | `output_directory` | No | Defaults to `./generated` when omitted. | Continue controlling where generated workspaces are written. |
-| `modules` | No | Defaults to `["base"]`; currently stored but not yet used to branch generation. | Select optional template packs and feature-specific scaffolds. |
+| `modules` | No | Defaults to `["base"]`; `base` always runs and other discovered module names generate optional scaffolds. Unknown names are reported and ignored for forward compatibility. | Select optional template packs and feature-specific scaffolds. |
 
 ## Generated Structure
 
@@ -112,6 +125,14 @@ The current generator creates the following structure:
 │   └── .gitkeep
 └── templates/
     └── .gitkeep
+```
+
+Selecting `resume` also creates:
+
+```text
+resume/
+├── README.md
+└── resume.json
 ```
 
 ## Run
@@ -151,7 +172,8 @@ pytest
 
 ## Roadmap
 
-- Wire `modules` to actual template packs.
+- Expand resume entries into typed experience, education, skill, and project
+  records suitable for downstream portfolio and document generators.
 - Replace hard-coded starter content with packaged templates.
 - Add richer generated documentation such as architecture, roadmap, and
   contribution guides.
