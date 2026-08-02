@@ -69,6 +69,8 @@ it.
   is written.
 - Added typed experience, education, skill, and project records plus a
   print-friendly HTML resume generated from the same validated data.
+- Added module-scoped input configuration so the resume module can generate its
+  canonical JSON and HTML output from a populated, validated career-data file.
 
 ## Configuration
 
@@ -91,7 +93,12 @@ run. A typical configuration looks like this:
     "gis",
     "games",
     "music"
-  ]
+  ],
+  "module_options": {
+    "resume": {
+      "data_file": "career-data.json"
+    }
+  }
 }
 ```
 
@@ -102,6 +109,7 @@ run. A typical configuration looks like this:
 | `project_name` | Yes | Names the generated project folder and starter README heading. | Continue serving as the canonical generated project name. |
 | `output_directory` | No | Defaults to `./generated` when omitted. | Continue controlling where generated workspaces are written. |
 | `modules` | No | Defaults to `["base"]`; `base` always runs and other discovered module names generate optional scaffolds. Unknown names are reported and ignored for forward compatibility. | Select optional template packs and feature-specific scaffolds. |
+| `module_options` | No | Supplies module-scoped settings. `resume.data_file` points to validated career JSON relative to `forge.json`. | Configure modules without coupling their settings to the core generator. |
 
 ## Generated Structure
 
@@ -175,11 +183,8 @@ pytest
 
 ## Roadmap
 
-- Accept populated career data as a Forge input so generated HTML resumes can
-  contain verified user content instead of starter placeholders.
-- Replace hard-coded starter content with packaged templates.
+- Add an example career-data file and preview command for a populated resume.
+- Add more independently discoverable modules.
 - Add richer generated documentation such as architecture, roadmap, and
   contribution guides.
-- Add validation and clearer CLI feedback for malformed configuration files.
-- Add tests for configuration defaults, missing configuration, and module-driven
-  generation.
+- Add migration/versioning support as career-data schemas evolve.

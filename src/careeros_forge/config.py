@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 import json
 
@@ -9,6 +9,8 @@ class ForgeConfig:
     project_name: str
     output_directory: Path
     modules: tuple[str, ...]
+    module_options: dict[str, dict[str, object]] = field(default_factory=dict)
+    config_directory: Path = Path(".")
 
 def load_config(path: Path) -> ForgeConfig:
     try:
@@ -22,4 +24,10 @@ def load_config(path: Path) -> ForgeConfig:
     name = str(data.get("project_name","")).strip()
     if not name:
         raise ValueError("project_name is required")
-    return ForgeConfig(name, Path(data.get("output_directory","./generated")), tuple(data.get("modules",["base"])))
+    return ForgeConfig(
+        project_name=name,
+        output_directory=Path(data.get("output_directory", "./generated")),
+        modules=tuple(data.get("modules", ["base"])),
+        module_options=data.get("module_options", {}),
+        config_directory=path.parent.resolve(),
+    )

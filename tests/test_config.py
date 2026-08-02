@@ -18,6 +18,23 @@ def test_load_config_applies_defaults(tmp_path: Path) -> None:
 
     assert config.output_directory == Path("./generated")
     assert config.modules == ("base",)
+    assert config.module_options == {}
+    assert config.config_directory == tmp_path.resolve()
+
+
+def test_load_config_reads_module_options(tmp_path: Path) -> None:
+    config = load_config(
+        write_config(
+            tmp_path,
+            {
+                "project_name": "Demo",
+                "modules": ["resume"],
+                "module_options": {"resume": {"data_file": "career.json"}},
+            },
+        )
+    )
+
+    assert config.module_options["resume"]["data_file"] == "career.json"
 
 
 @pytest.mark.parametrize(
@@ -29,6 +46,13 @@ def test_load_config_applies_defaults(tmp_path: Path) -> None:
         (
             {"project_name": "Demo", "modules": ["resume", "resume"]},
             "non-unique",
+        ),
+        (
+            {
+                "project_name": "Demo",
+                "module_options": {"resume": {"unknown": True}},
+            },
+            "(?i)additional properties",
         ),
     ],
 )
