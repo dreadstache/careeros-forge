@@ -55,3 +55,25 @@ def test_html_templates_escape_resume_data() -> None:
 
     assert "&lt;script&gt;alert(1)&lt;/script&gt;" in content
     assert "<script>alert(1)</script>" not in content
+
+
+def test_html_templates_hide_archived_records() -> None:
+    resume = {
+        "basics": {"name": "Demo", "headline": "", "summary": ""},
+        "experience": [{
+            "id": "old-role",
+            "status": "archived",
+            "organization": "Hidden Company",
+            "position": "Old Role",
+            "start_date": "2020",
+            "highlights": [],
+        }],
+        "education": [],
+        "skills": [],
+        "projects": [],
+    }
+
+    content = TemplateRenderer().render("resume/index.html.j2", resume=resume)
+
+    assert "Hidden Company" not in content
+    assert "Add verified experience records" in content

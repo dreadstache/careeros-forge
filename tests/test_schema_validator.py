@@ -76,3 +76,22 @@ def test_resume_schema_rejects_invalid_project_url() -> None:
 
     with pytest.raises(SchemaValidationError, match="projects.0.url"):
         validate_json_text(content, "resume")
+
+
+def test_resume_schema_accepts_record_metadata() -> None:
+    content = """{
+      "schema_version": "1.0",
+      "basics": {"name": "", "headline": "", "summary": ""},
+      "experience": [{
+        "id": "city-of-casper-2015",
+        "status": "archived",
+        "provenance": {"source": "career-data.xlsx", "source_type": "spreadsheet"},
+        "organization": "City of Casper",
+        "position": "Systems Analyst",
+        "start_date": "2015",
+        "highlights": []
+      }],
+      "education": [], "skills": [], "projects": []
+    }"""
+
+    validate_json_text(content, "resume")
