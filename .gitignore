@@ -15,3 +15,4 @@ build/
 Thumbs.db
 exports/*
 !exports/.gitkeep
+examples/generated/

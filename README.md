@@ -160,6 +160,15 @@ If the package is installed, the console script can also be used:
 careeros-forge
 ```
 
+Generate and open the populated example resume with one command:
+
+```bash
+careeros-forge --config examples/forge.example.json --preview
+```
+
+The example is derived from verified source-CV material and intentionally omits
+street address, phone number, references, and unsupported platform claims.
+
 ## Development
 
 Install the project in editable mode before running local checks:

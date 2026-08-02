@@ -14,7 +14,10 @@ class GenerationReport:
 
 
 def generate_project_with_report(config) -> GenerationReport:
-    root = config.output_directory / config.project_name
+    output_directory = config.output_directory
+    if not output_directory.is_absolute():
+        output_directory = config.config_directory / output_directory
+    root = output_directory / config.project_name
     context = GenerationContext(config=config, root=root)
     registry = discover_modules()
 
