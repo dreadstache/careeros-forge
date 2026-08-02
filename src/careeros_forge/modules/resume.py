@@ -13,8 +13,13 @@ class ResumeModule(ForgeModule):
             project_name=context.config.project_name,
         )
         resume_json = context.renderer.render("resume/resume.json.j2")
-        validate_json_text(resume_json, "resume")
+        resume_data = validate_json_text(resume_json, "resume")
         context.write_text("resume/resume.json", resume_json)
+        context.render_template(
+            "resume/index.html.j2",
+            "resume/index.html",
+            resume=resume_data,
+        )
 
 
 MODULE = ResumeModule()

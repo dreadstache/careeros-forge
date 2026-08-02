@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ resume.basics.name or "Resume" }}</title>
+  <style>
+    :root { --ink:#18202d; --muted:#5f6b7a; --line:#dce2e9; --accent:#176b87; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#eef2f5; color:var(--ink); font:15px/1.55 system-ui,sans-serif; }
+    main { width:min(900px,calc(100% - 32px)); margin:36px auto; padding:52px; background:white; box-shadow:0 12px 40px #1b28351f; }
+    h1 { margin:0; font-size:2.7rem; line-height:1; letter-spacing:-.04em; }
+    h2 { margin:2rem 0 .75rem; padding-bottom:.35rem; border-bottom:2px solid var(--accent); font-size:1rem; text-transform:uppercase; letter-spacing:.11em; }
+    h3 { margin:0; font-size:1rem; }
+    p { margin:.35rem 0; }
+    ul { margin:.45rem 0 1.1rem; padding-left:1.2rem; }
+    .headline { color:var(--accent); font-size:1.15rem; }
+    .meta,.empty { color:var(--muted); }
+    .entry { margin:0 0 1.2rem; }
+    .entry-head { display:flex; justify-content:space-between; gap:1rem; }
+    .skills { display:flex; flex-wrap:wrap; gap:.45rem; }
+    .skill { padding:.3rem .6rem; border-radius:999px; background:#e9f4f7; }
+    @media print { body{background:white} main{width:auto;margin:0;padding:0;box-shadow:none} }
+    @media(max-width:600px){ main{padding:28px}.entry-head{display:block} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>{{ resume.basics.name or "Your Name" }}</h1>
+    <p class="headline">{{ resume.basics.headline or "Professional Headline" }}</p>
+    {% if resume.basics.summary %}<p>{{ resume.basics.summary }}</p>{% endif %}
+  </header>
+
+  <section>
+    <h2>Experience</h2>
+    {% for item in resume.experience %}
+    <div class="entry">
+      <div class="entry-head"><h3>{{ item.position }} · {{ item.organization }}</h3><span class="meta">{{ item.start_date }}–{{ item.get("end_date") or "Present" }}</span></div>
+      {% if item.get("summary") %}<p>{{ item.summary }}</p>{% endif %}
+      {% if item.highlights %}<ul>{% for highlight in item.highlights %}<li>{{ highlight }}</li>{% endfor %}</ul>{% endif %}
+    </div>
+    {% else %}<p class="empty">Add verified experience records to resume.json.</p>{% endfor %}
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    {% for item in resume.projects %}
+    <div class="entry"><h3>{{ item.name }}</h3><p>{{ item.summary }}</p>{% if item.highlights %}<ul>{% for highlight in item.highlights %}<li>{{ highlight }}</li>{% endfor %}</ul>{% endif %}</div>
+    {% else %}<p class="empty">Add verified project records to resume.json.</p>{% endfor %}
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skills">{% for item in resume.skills %}<span class="skill">{{ item.name }}{% if item.keywords %}: {{ item.keywords | join(", ") }}{% endif %}</span>{% else %}<span class="empty">Add verified skill records to resume.json.</span>{% endfor %}</div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    {% for item in resume.education %}<div class="entry"><div class="entry-head"><h3>{{ item.credential }} · {{ item.institution }}</h3><span class="meta">{{ item.start_date }}–{{ item.get("end_date") or "Present" }}</span></div>{% if item.get("field") %}<p>{{ item.field }}</p>{% endif %}</div>{% else %}<p class="empty">Add verified education records to resume.json.</p>{% endfor %}
+  </section>
+</main>
+</body>
+</html>

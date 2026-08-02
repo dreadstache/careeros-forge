@@ -20,8 +20,12 @@ def test_generate_resume_module(tmp_path: Path):
 
     assert (root / "resume" / "README.md").exists()
     assert (root / "resume" / "resume.json").exists()
+    assert (root / "resume" / "index.html").exists()
     assert '"experience": []' in (
         root / "resume" / "resume.json"
+    ).read_text(encoding="utf-8")
+    assert "Add verified experience records" in (
+        root / "resume" / "index.html"
     ).read_text(encoding="utf-8")
 
 

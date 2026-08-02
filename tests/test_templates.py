@@ -40,3 +40,18 @@ def test_context_renders_template_to_project(tmp_path: Path) -> None:
     )
 
     assert output.read_text(encoding="utf-8").startswith("# Demo Resume")
+
+
+def test_html_templates_escape_resume_data() -> None:
+    resume = {
+        "basics": {"name": "<script>alert(1)</script>", "headline": "", "summary": ""},
+        "experience": [],
+        "education": [],
+        "skills": [],
+        "projects": [],
+    }
+
+    content = TemplateRenderer().render("resume/index.html.j2", resume=resume)
+
+    assert "&lt;script&gt;alert(1)&lt;/script&gt;" in content
+    assert "<script>alert(1)</script>" not in content

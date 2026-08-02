@@ -67,6 +67,8 @@ it.
 - Added packaged JSON Schemas for `forge.json` and resume data. Configuration is
   validated before generation, and rendered resume JSON is validated before it
   is written.
+- Added typed experience, education, skill, and project records plus a
+  print-friendly HTML resume generated from the same validated data.
 
 ## Configuration
 
@@ -131,6 +133,7 @@ Selecting `resume` also creates:
 
 ```text
 resume/
+├── index.html
 ├── README.md
 └── resume.json
 ```
@@ -172,8 +175,8 @@ pytest
 
 ## Roadmap
 
-- Expand resume entries into typed experience, education, skill, and project
-  records suitable for downstream portfolio and document generators.
+- Accept populated career data as a Forge input so generated HTML resumes can
+  contain verified user content instead of starter placeholders.
 - Replace hard-coded starter content with packaged templates.
 - Add richer generated documentation such as architecture, roadmap, and
   contribution guides.

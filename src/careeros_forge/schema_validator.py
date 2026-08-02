@@ -3,7 +3,7 @@ from functools import lru_cache
 from importlib.resources import files
 from typing import Any
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 
 
 class SchemaValidationError(ValueError):
@@ -21,7 +21,10 @@ def load_schema(schema_name: str) -> dict[str, Any]:
 
 
 def validate_data(data: object, schema_name: str) -> None:
-    validator = Draft202012Validator(load_schema(schema_name))
+    validator = Draft202012Validator(
+        load_schema(schema_name),
+        format_checker=FormatChecker(),
+    )
     errors = sorted(validator.iter_errors(data), key=lambda error: list(error.path))
     if not errors:
         return

@@ -1,4 +1,9 @@
-from jinja2 import Environment, PackageLoader, StrictUndefined, TemplateNotFound
+from jinja2 import (
+    Environment,
+    PackageLoader,
+    StrictUndefined,
+    TemplateNotFound,
+)
 
 
 class TemplateRenderer:
@@ -8,7 +13,9 @@ class TemplateRenderer:
         self._environment = Environment(
             loader=PackageLoader("careeros_forge", "templates"),
             undefined=StrictUndefined,
-            autoescape=False,
+            autoescape=lambda name: bool(
+                name and name.endswith((".html", ".html.j2", ".xml", ".xml.j2"))
+            ),
             keep_trailing_newline=True,
         )
 
