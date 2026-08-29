@@ -23,7 +23,7 @@ class ResumeModule(ForgeModule):
             "resume/index.html.j2",
             "resume/index.html",
             resume=resume_data,
-            profile_title=None,
+            profile_title="Résumé Library",
         )
         self._generate_profiles(context, resume_data)
 
