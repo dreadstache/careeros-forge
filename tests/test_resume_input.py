@@ -51,6 +51,7 @@ def test_resume_module_generates_from_relative_data_file(tmp_path: Path) -> None
     )
     instructions = (root / "resume" / "README.md").read_text(encoding="utf-8")
     assert "Ada Lovelace" in html
+    assert "<title>Ada Lovelace · Résumé Library</title>" in html
     assert "Published the first algorithm" in html
     assert generated_data == resume_data()
     assert "career.json" in instructions
